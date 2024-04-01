@@ -1,0 +1,374 @@
+<html>
+<head>
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js">
+
+    </script>
+
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Welcome</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Member</a>
+                <a class="nav-link active" aria-current="page" href="/trainer">Trainer</a>
+                <a class="nav-link" href="/administrator">Administrative Staff</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container text-center" style="margin-top: 15%">
+    <div class="row row-cols-4">
+        <div class="col"></div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#schedule">Schedule
+                Management
+            </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#memberProfile">Member
+                Profile Viewing
+            </button>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="memberProfile" tabindex="-1" aria-labelledby="memberProfileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ProfileLabel">Member Profile</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>There may be duplicate names, so we use email to search for member profiles.</p>
+                <form>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <label for="profile_email" class="col-form-label">Member Email:</label>
+                            <input placeholder="Input email to get the information" type="text" class="form-control"
+                                   id="profile_email">
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="mb-3">
+                        <h4>Personal information</h4>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">First and last name</span>
+                            <input readonly id="profile_member_first" type="text" aria-label="First name"
+                                   class="form-control">
+                            <input readonly id="profile_member_last" type="text" aria-label="Last name"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Phone</span>
+                            <input readonly id="profile_member_phone" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="mb-3">
+                        <h4>Fitness goals</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Time Goal</span>
+                        <input readonly id="time_goal" type="text" class="form-control" aria-label="time goal">
+                        <span class="input-group-text">Month</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Weight goal</span>
+                        <input readonly id="weight_goal" type="text" class="form-control" aria-label="weight goal">
+                        <span class="input-group-text">KG</span>
+                    </div>
+                </form>
+                <form>
+                    <div class="mb-3">
+                        <h4>Health Metrics</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Weight</span>
+                        <input readonly id="weight" type="text" class="form-control" aria-label="weight">
+                        <span class="input-group-text">KG</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Height</span>
+                        <input readonly id="height" type="text" class="form-control" aria-label="height">
+                        <span class="input-group-text">CM</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">BMI</span>
+                        <input id="bmi" type="text" class="form-control" aria-label="bmi" readonly>
+                        <span class="input-group-text">kg/m<sup>2</sup></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="profileClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade " id="schedule" tabindex="-1" aria-labelledby="scheduleLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="scheduleLabel">Schedule Management</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>You can delete the data that was added through this web interface. Do not delete default values, as other tables may also use this data. For convenience, we initialize values just once and use them in multiple places.</p>
+                <form>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <label for="trainer_email" class="col-form-label">Trainer Email:</label>
+                            <input placeholder="Input email to get the information" type="text" class="form-control"
+                                   id="trainer_email">
+                        </div>
+                    </div>
+                </form>
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="mb-3">
+                        <h4>Current Schedule</h4>
+                    </div>
+                    <div id="table">
+                        <table id="scheduleTable" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Date</th>
+                                <th>Start time</th>
+                                <th>End time</th>
+                                <th>Handle</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <form>
+                    <div class="mb-3">
+                        <h4>Add New One</h4>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Date</span>
+                            <input id="trainer_date" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Start time</span>
+                            <input id="trainer_starttime" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">End time</span>
+                            <input id="trainer_endtime" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="trainerClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="profileSave" type="button" class="btn btn-primary" onclick="trainerAdd()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+    let emailInput = document.getElementById('profile_email');
+    let profileFunction = function () {
+        // Get the new value of the input
+        let email = emailInput.value;
+
+        // Send a request with the new value
+        fetch('/member/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    let first_text = document.getElementById("profile_member_first");
+                    let last_text = document.getElementById("profile_member_last");
+                    let phone_text = document.getElementById("profile_member_phone");
+
+                    first_text.value = data.data.first_name;
+                    last_text.value = data.data.last_name;
+                    phone_text.value = data.data.phone;
+                } else {
+                    alert("No such member!");
+                }
+            });
+
+        fetch('http://localhost:8080/member/fitness/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    let time_goal = document.getElementById("time_goal");
+                    let weight_goal = document.getElementById("weight_goal");
+
+                    time_goal.value = data.data.time_goal;
+                    weight_goal.value = data.data.weight_goal;
+                }
+            });
+
+        fetch('http://localhost:8080/member/health/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    let weight = document.getElementById("weight");
+                    let height = document.getElementById("height");
+                    let bmi = document.getElementById("bmi");
+
+                    weight.value = data.data.weight;
+                    height.value = data.data.height;
+                    bmi.value = data.data.bmi;
+                }
+            });
+    }
+    // Add an event listener for the "change" event
+    emailInput.addEventListener('change', profileFunction);
+
+
+
+
+    let trainer_email = document.getElementById('trainer_email');
+
+    function removeButton(id) {
+        let available = {
+            trainer_email: trainer_email.value,
+            time_id: id,
+        }
+
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Deleted!")
+                $('#scheduleTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/trainer/delete");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(available));
+    }
+    let scheduleFunction = function () {
+        // Get the new value of the input
+        let email = trainer_email.value;
+
+        // Send a request with the new value
+        fetch('/trainer/schedule/' + email)
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.data != undefined) {
+
+
+                    if ( ! $.fn.DataTable.isDataTable( '#scheduleTable' ) ) {
+                        let scheduleTable = $('#scheduleTable').DataTable({
+                            ajax: '/trainer/schedule/' + email,
+                            columnDefs: [
+                                {
+                                    data: 'id',
+                                    targets: 0,
+                                },
+                                {
+                                    data: 'date',
+                                    targets: 1
+                                },
+                                {
+                                    data: 'start_time',
+                                    targets: 2
+                                },
+                                {
+                                    data: 'end_time',
+                                    targets: 3
+                                },
+                                {
+                                    data: null,
+                                    defaultContent: '<button  class="btn btn-danger">Remove</button>',
+                                    targets: -1
+                                }
+                            ]
+                        });
+
+                        scheduleTable.on('click', 'button', function (e) {
+                            let firstCellValue = $(this).closest('tr').find('td:first').text();
+                            removeButton(firstCellValue);
+                        });
+                    }
+
+
+
+                } else {
+                    let res = `<div style="display: flex; justify-content: center; align-items: center;">No any schedule right now!<div>`;
+                    document.getElementById("table").innerHTML += res;
+                }
+            });
+    }
+    // Add an event listener for the "change" event
+    trainer_email.addEventListener('change', scheduleFunction);
+
+
+
+
+    function trainerAdd(){
+        let trainer_date = document.getElementById("trainer_date").value;
+        let trainer_starttime = document.getElementById("trainer_starttime").value;
+        let trainer_endtime = document.getElementById("trainer_endtime").value;
+
+        let schedule = {
+            date: trainer_date,
+            start_time: trainer_starttime,
+            end_time: trainer_endtime,
+            email:trainer_email.value
+        }
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("add success!");
+                $('#scheduleTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "http://localhost:8080/trainer/add");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(schedule));
+    }
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,893 @@
+<html>
+<head>
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js">
+
+    </script>
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Welcome</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/">Member</a>
+                <a class="nav-link" href="/trainer">Trainer</a>
+                <a class="nav-link" href="/administrator">Administrative Staff</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container text-center" style="margin-top: 15%">
+    <div class="row row-cols-4">
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#TestRegister">User
+                Register
+            </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Profile">Profile
+                Management
+            </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Dashboard">Dashboard
+                Display
+            </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Schedule">Schedule
+                Management
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="TestRegister" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Member Register</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="member-email" class="col-form-label">Email:</label>
+                        <input type="text" class="form-control" id="member-email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="member-first" class="col-form-label">First Name:</label>
+                        <input type="text" class="form-control" id="member-first">
+                    </div>
+                    <div class="mb-3">
+                        <label for="member-last" class="col-form-label">Last Name:</label>
+                        <input type="text" class="form-control" id="member-last">
+                    </div>
+                    <div class="mb-3">
+                        <label for="member-phone" class="col-form-label">Phone:</label>
+                        <input type="text" class="form-control" id="member-phone">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="registerClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                </button>
+                <button id="register" type="button" class="btn btn-primary" onclick="memberRegister()">Register</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Profile" tabindex="-1" aria-labelledby="ProfileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ProfileLabel">Profile Management</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <label for="profile_email" class="col-form-label">Email:</label>
+                            <input placeholder="Input email to get the information" type="text" class="form-control"
+                                   id="profile_email">
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="mb-3">
+                        <h4>Personal information</h4>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">First and last name</span>
+                            <input id="profile_member_first" type="text" aria-label="First name" class="form-control">
+                            <input id="profile_member_last" type="text" aria-label="Last name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Phone</span>
+                            <input id="profile_member_phone" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="mb-3">
+                        <h4>Fitness goals</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Time Goal</span>
+                        <input id="time_goal" type="text" class="form-control" aria-label="time goal">
+                        <span class="input-group-text">Month</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Weight goal</span>
+                        <input id="weight_goal" type="text" class="form-control" aria-label="weight goal">
+                        <span class="input-group-text">KG</span>
+                    </div>
+                </form>
+                <form>
+                    <div class="mb-3">
+                        <h4>Health Metrics</h4>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Weight</span>
+                        <input id="weight" type="text" class="form-control" aria-label="weight">
+                        <span class="input-group-text">KG</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Height</span>
+                        <input id="height" type="text" class="form-control" aria-label="height">
+                        <span class="input-group-text">CM</span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">BMI</span>
+                        <input id="bmi" type="text" class="form-control" aria-label="bmi" readonly>
+                        <span class="input-group-text">kg/m<sup>2</sup></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="profileClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="profileSave" type="button" class="btn btn-primary" onclick="profileSave()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Dashboard" tabindex="-1" aria-labelledby="DashboardLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="DashboardLabel">Dashboard Display</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>For now, we are just preparing some data here. In the real world, these data should come from
+                    integrating wearable devices to track workouts.</p>
+                <form>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <label for="profile_email" class="col-form-label">Email:</label>
+                            <input placeholder="Input email to get the information" type="text" class="form-control"
+                                   id="dashboard_email">
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="mb-3">
+                        <h4> Exercise routine</h4>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">One day hours</span>
+                            <input readonly id="dashboard_onedayhours" type="text" class="form-control">
+                            <span class="input-group-text">h/d</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">One week days</span>
+                            <input readonly id="dashboard_oneweekdays" type="text" class="form-control">
+                            <span class="input-group-text">d/w</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Achieve hours</span>
+                            <input readonly id="dashboard_achieve" type="text" class="form-control">
+                            <span class="input-group-text">hour</span>
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="mb-3">
+                        <h4> Health statistics</h4>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Heartbeat</span>
+                            <input readonly id="dashboard_heartbeat" type="text" class="form-control">
+                            <span class="input-group-text">b/m</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Systolic</span>
+                            <input readonly id="dashboard_systolic" type="text" class="form-control">
+                            <span class="input-group-text">mmHg</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Diastolic</span>
+                            <input readonly id="dashboard_diastolic" type="text" class="form-control">
+                            <span class="input-group-text">mmHg</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Cholesterol Levels</span>
+                            <input readonly id="dashboard_cholesterol" type="text" class="form-control">
+                            <span class="input-group-text">mg/dL</span>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="DashboardClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Schedule" tabindex="-1" aria-labelledby="scheduleLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="scheduleLabel">Schedule Management</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <label for="schedule_email" class="col-form-label">Email:</label>
+                            <input placeholder="Input email to get the information" type="text" class="form-control"
+                                   id="schedule_email">
+                        </div>
+                    </div>
+                </form>
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="mb-3">
+                        <h4>Enrolled training sessions</h4>
+                    </div>
+                    <div id="training_sessions">
+                        <table id="sessionTable" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Trainer email</th>
+                                <th>Date</th>
+                                <th>Start time</th>
+                                <th>End time</th>
+                                <th>Handle</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="mb-3">
+                        <h4>Available trainer</h4>
+                    </div>
+                    <div id="available_trainer">
+                        <table id="trainerTable" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Trainer email</th>
+                                <th>Date</th>
+                                <th>Start time</th>
+                                <th>End time</th>
+                                <th>Handle</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="mb-3">
+                        <h4>Enrolled classes</h4>
+                    </div>
+                    <div id="enrolled_classes">
+                        <table id="enrolledTable" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Class id</th>
+                                <th>Class name</th>
+                                <th>Room number</th>
+                                <th>Date</th>
+                                <th>Start time</th>
+                                <th>End time</th>
+                                <th>Handle</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="mb-3">
+                        <h4>Classes</h4>
+                    </div>
+                    <div id="classes">
+                        <table id="classTable" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Class id</th>
+                                <th>Class name</th>
+                                <th>Room number</th>
+                                <th>Date</th>
+                                <th>Start time</th>
+                                <th>End time</th>
+                                <th>Handle</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="trainerClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function memberRegister() {
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("registerClose").click();
+                alert("Register success!");
+            }
+        };
+        // get data
+        var email = document.getElementById('member-email').value;
+        var firstName = document.getElementById('member-first').value;
+        var lastName = document.getElementById('member-last').value;
+        var phone = document.getElementById('member-phone').value;
+
+        var memberData = {
+            email: email,
+            first_name: firstName,
+            last_name: lastName,
+            phone: phone
+        };
+        // request send
+        xhttp.open("POST", "http://localhost:8080/member/register");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(memberData));
+    }
+
+    let emailInput = document.getElementById('profile_email');
+    let profileFunction = function () {
+        // Get the new value of the input
+        let email = emailInput.value;
+
+        // Send a request with the new value
+        fetch('/member/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    let first_text = document.getElementById("profile_member_first");
+                    let last_text = document.getElementById("profile_member_last");
+                    let phone_text = document.getElementById("profile_member_phone");
+
+                    first_text.value = data.data.first_name;
+                    last_text.value = data.data.last_name;
+                    phone_text.value = data.data.phone;
+                } else {
+                    alert("No such member!");
+                }
+            });
+
+        fetch('http://localhost:8080/member/fitness/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    let time_goal = document.getElementById("time_goal");
+                    let weight_goal = document.getElementById("weight_goal");
+
+                    time_goal.value = data.data.time_goal;
+                    weight_goal.value = data.data.weight_goal;
+                }
+            });
+
+        fetch('http://localhost:8080/member/health/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    let weight = document.getElementById("weight");
+                    let height = document.getElementById("height");
+                    let bmi = document.getElementById("bmi");
+
+                    weight.value = data.data.weight;
+                    height.value = data.data.height;
+                    bmi.value = data.data.bmi;
+                }
+            });
+    }
+    // Add an event listener for the "change" event
+    emailInput.addEventListener('change', profileFunction);
+
+    function profileSave() {
+
+        // get data
+        let email = document.getElementById('profile_email').value;
+        let firstName = document.getElementById('profile_member_first').value;
+        let lastName = document.getElementById('profile_member_last').value;
+        let phone = document.getElementById('profile_member_phone').value;
+
+        let member = {
+            email: email,
+            first_name: firstName,
+            last_name: lastName,
+            phone: phone
+        };
+
+        let time_goal = document.getElementById("time_goal").value;
+        let weight_goal = document.getElementById("weight_goal").value;
+
+        let fitness = {
+            member_email: email,
+            time_goal: time_goal,
+            weight_goal: weight_goal,
+        }
+
+        let weight = document.getElementById("weight").value;
+        let height = document.getElementById("height").value;
+        let BMI = parseFloat((weight / (height / 100) ** 2).toFixed(1));
+
+        let health = {
+            member_email: email,
+            weight: weight,
+            height: height,
+            bmi: BMI
+        }
+        // request
+        let xhttpMember = new XMLHttpRequest();
+        xhttpMember.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Personal information updated success!");
+            }
+        };
+        xhttpMember.open("POST", "http://localhost:8080/member/update");
+        xhttpMember.setRequestHeader("Accept", "application/json");
+        xhttpMember.setRequestHeader("Content-Type", "application/json");
+        xhttpMember.send(JSON.stringify(member));
+
+        let xhttpFitness = new XMLHttpRequest();
+        xhttpFitness.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert(JSON.parse(this.responseText).data);
+            }
+        };
+        xhttpFitness.open("POST", "http://localhost:8080/member/fitness");
+        xhttpFitness.setRequestHeader("Accept", "application/json");
+        xhttpFitness.setRequestHeader("Content-Type", "application/json");
+        xhttpFitness.send(JSON.stringify(fitness));
+
+        let xhttpHealth = new XMLHttpRequest();
+        xhttpHealth.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert(JSON.parse(this.responseText).data);
+                profileFunction();
+            }
+        };
+        xhttpHealth.open("POST", "http://localhost:8080/member/health");
+        xhttpHealth.setRequestHeader("Accept", "application/json");
+        xhttpHealth.setRequestHeader("Content-Type", "application/json");
+        xhttpHealth.send(JSON.stringify(health));
+    }
+
+    let dashboard_email = document.getElementById('dashboard_email');
+    let dashboardFunction = function () {
+        // Get the new value of the input
+        let email = dashboard_email.value;
+
+        // Send a request with the new value
+        fetch('http://localhost:8080/member/dashboard/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    let dashboard_onedayhours = document.getElementById("dashboard_onedayhours");
+                    let dashboard_oneweekdays = document.getElementById("dashboard_oneweekdays");
+                    let dashboard_achieve = document.getElementById("dashboard_achieve");
+
+                    dashboard_onedayhours.value = data.data.oneday_hours;
+                    dashboard_oneweekdays.value = data.data.oneweek_days;
+                    dashboard_achieve.value = data.data.achieve_hours;
+                } else {
+                    alert("No such member!");
+                }
+            });
+
+        fetch('http://localhost:8080/member/statistics/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    let dashboard_heartbeat = document.getElementById("dashboard_heartbeat");
+                    let dashboard_systolic = document.getElementById("dashboard_systolic");
+                    let dashboard_diastolic = document.getElementById("dashboard_diastolic");
+                    let dashboard_cholesterol = document.getElementById("dashboard_cholesterol");
+
+                    dashboard_heartbeat.value = data.data.heartbeat;
+                    dashboard_systolic.value = data.data.systolic;
+                    dashboard_diastolic.value = data.data.diastolic;
+                    dashboard_cholesterol.value = data.data.cholesterol_levels;
+                }
+            });
+    }
+    // Add an event listener for the "change" event
+    dashboard_email.addEventListener('change', dashboardFunction);
+
+
+    // #######################################
+
+    let schedule_email = document.getElementById('schedule_email');
+
+    function removeTrainingButton(id, trainer_email) {
+        let training = {
+            member_email: schedule_email.value,
+            trainer_email: trainer_email,
+            time_id: id
+        }
+
+        console.log(training);
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Deleted!")
+                $('#sessionTable').DataTable().ajax.reload();
+                $('#trainerTable').DataTable().ajax.reload();
+
+            }
+        };
+        xhttp.open("POST", "/member/training/delete");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(training));
+    }
+
+    let scheduleFunction = function () {
+        // Get the new value of the input
+        let email = schedule_email.value;
+
+        // Get Training
+        fetch('/member/training/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+
+
+                    if ( ! $.fn.DataTable.isDataTable( '#sessionTable' ) ) {
+                        let sessionTable = $('#sessionTable').DataTable({
+                            ajax: '/member/training/' + email,
+                            columnDefs: [
+                                {
+                                    data: 'time_id',
+                                    targets: 0,
+                                },
+                                {
+                                    data: 'trainer_email',
+                                    targets: 1
+                                },
+                                {
+                                    data: 'date',
+                                    targets: 2
+                                },
+                                {
+                                    data: 'start_time',
+                                    targets: 3
+                                },
+                                {
+                                    data: 'end_time',
+                                    targets: 4
+                                },
+                                {
+                                    data: null,
+                                    defaultContent: '<button  class="btn btn-danger">Remove</button>',
+                                    targets: -1
+                                }
+                            ]
+                        });
+
+                        sessionTable.on('click', 'button', function (e) {
+                            let firstCellValue = $(this).closest('tr').find('td:first').text();
+                            let secondCellValue = $(this).closest('tr').find('td').eq(1).text();
+                            removeTrainingButton(firstCellValue, secondCellValue);
+                        });
+                    }
+
+                } else {
+                    let res = `<div style="display: flex; justify-content: center; align-items: center;">No any training sessions right now!<div>`;
+                    document.getElementById("training_sessions").innerHTML += res;
+                }
+            });
+
+        // Get Trainer
+        fetch('/member/trainer/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+
+                    if ( ! $.fn.DataTable.isDataTable( '#trainerTable' ) ) {
+                        let trainerTable = $('#trainerTable').DataTable({
+                            ajax: '/member/trainer/' + email,
+                            columnDefs: [
+                                {
+                                    data: 'time_id',
+                                    targets: 0,
+                                },
+                                {
+                                    data: 'trainer_email',
+                                    targets: 1
+                                },
+                                {
+                                    data: 'date',
+                                    targets: 2
+                                },
+                                {
+                                    data: 'start_time',
+                                    targets: 3
+                                },
+                                {
+                                    data: 'end_time',
+                                    targets: 4
+                                },
+                                {
+                                    data: null,
+                                    defaultContent: '<button  class="btn btn-success">Add</button>',
+                                    targets: -1
+                                }
+                            ]
+                        });
+
+                        trainerTable.on('click', 'button', function (e) {
+                            let firstCellValue = $(this).closest('tr').find('td:first').text();
+                            let secondCellValue = $(this).closest('tr').find('td').eq(1).text();
+                            addTrainingButton(firstCellValue, secondCellValue);
+                        });
+
+                    }
+
+                } else {
+                    let res = `<div style="display: flex; justify-content: center; align-items: center;">No any available trainer right now!<div>`;
+                    document.getElementById("available_trainer").innerHTML += res;
+                }
+            });
+
+        // Get group
+        fetch('/member/group/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+
+
+                    if ( ! $.fn.DataTable.isDataTable( '#enrolledTable' ) ) {
+                        let enrolledTable = $('#enrolledTable').DataTable({
+                            ajax: '/member/group/' + email,
+                            columnDefs: [
+                                {
+                                    data: 'class_id',
+                                    targets: 0,
+                                },
+                                {
+                                    data: 'class_name',
+                                    targets: 1
+                                },
+                                {
+                                    data: 'room_number',
+                                    targets: 2
+                                },
+                                {
+                                    data: 'date',
+                                    targets: 3
+                                },
+                                {
+                                    data: 'start_time',
+                                    targets: 4
+                                },
+                                {
+                                    data: 'end_time',
+                                    targets: 5
+                                },
+                                {
+                                    data: null,
+                                    defaultContent: '<button  class="btn btn-danger">Remove</button>',
+                                    targets: -1
+                                }
+                            ]
+                        });
+
+                        enrolledTable.on('click', 'button', function (e) {
+                            let firstCellValue = $(this).closest('tr').find('td:first').text();
+                            removeGroupButton(firstCellValue);
+                        });
+                    }
+
+                } else {
+                    let res = `<div style="display: flex; justify-content: center; align-items: center;">No any enrolled class right now!<div>`;
+                    document.getElementById("enrolled_classes").innerHTML += res;
+                }
+            });
+
+        // Get Trainer
+        fetch('/member/class/' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+
+
+                    if ( ! $.fn.DataTable.isDataTable( '#classTable' ) ) {
+                        let classTable = $('#classTable').DataTable({
+                            ajax: '/member/class/' + email,
+                            columnDefs: [
+                                {
+                                    data: 'class_id',
+                                    targets: 0,
+                                },
+                                {
+                                    data: 'class_name',
+                                    targets: 1
+                                },
+                                {
+                                    data: 'room_number',
+                                    targets: 2
+                                },
+                                {
+                                    data: 'date',
+                                    targets: 3
+                                },
+                                {
+                                    data: 'start_time',
+                                    targets: 4
+                                },
+                                {
+                                    data: 'end_time',
+                                    targets: 5
+                                },
+                                {
+                                    data: null,
+                                    defaultContent: '<button  class="btn btn-success">Add</button>',
+                                    targets: -1
+                                }
+                            ]
+                        });
+
+                        classTable.on('click', 'button', function (e) {
+                            let firstCellValue = $(this).closest('tr').find('td:first').text();
+                            addGroupButton(firstCellValue);
+                        });
+                    }
+
+                } else {
+                    let res = `<div style="display: flex; justify-content: center; align-items: center;">No any available trainer right now!<div>`;
+                    document.getElementById("available_trainer").innerHTML += res;
+                }
+            });
+    }
+    // Add an event listener for the "change" event
+    schedule_email.addEventListener('change', scheduleFunction);
+
+
+    function addTrainingButton(id, trainer_email) {
+        let training = {
+            member_email: schedule_email.value,
+            trainer_email: trainer_email,
+            time_id: id
+        }
+
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Add success!")
+                $('#sessionTable').DataTable().ajax.reload();
+                $('#trainerTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/member/training/add");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(training));
+    }
+
+
+    // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    function removeGroupButton(id) {
+        let GroupClass = {
+            member_email: schedule_email.value,
+            class_id: id
+        }
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Deleted!")
+                $('#enrolledTable').DataTable().ajax.reload();
+                $('#classTable').DataTable().ajax.reload();
+
+            }
+        };
+        xhttp.open("POST", "/member/group/delete");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(GroupClass));
+    }
+
+    function addGroupButton(id) {
+        let GroupClass = {
+            member_email: schedule_email.value,
+            class_id: id
+        }
+
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Add success!")
+                $('#enrolledTable').DataTable().ajax.reload();
+                $('#classTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/member/group/add");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(GroupClass));
+    }
+
+</script>
+
+
+</body>
+</html>

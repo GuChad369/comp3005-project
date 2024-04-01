@@ -1,0 +1,853 @@
+<html>
+<head>
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js">
+
+    </script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Welcome</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Member</a>
+                <a class="nav-link" href="/trainer">Trainer</a>
+                <a class="nav-link active" aria-current="page" href="/administrator">Administrative Staff</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container text-center" style="margin-top: 15%">
+    <div class="row row-cols-4">
+        <div class="col">
+            <button type="button" class="btn btn-primary" onclick="roomBooking()">Room Booking Management
+            </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" onclick="equipmentMaintenance()">Equipment Maintenance
+                Monitoring
+            </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" onclick="classScheduleUpdate()">Class Schedule Updating
+            </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" onclick="bill()">Billing and
+                Payment Processing
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade " id="room" tabindex="-1" aria-labelledby="roomLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="roomLabel">Room Booking Management</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="mb-3">
+                        <h4>Current Room Occupancy</h4>
+                    </div>
+                    <div id="roomDiv">
+                        <table id="roomTable" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Room number</th>
+                                <th>Date</th>
+                                <th>Start time</th>
+                                <th>End time</th>
+                                <th>Handle</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <form>
+                    <div class="mb-3">
+                        <h4>Add new one</h4>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Room number</span>
+                            <input id="room_number" type="text" class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Date</span>
+                            <input id="room_date" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Start time</span>
+                            <input id="room_starttime" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">End time</span>
+                            <input id="room_endtime" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="trainerClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="roomSave" type="button" class="btn btn-primary" onclick="roomAdd()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="equipment" tabindex="-1" aria-labelledby="equipmentLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="equipmentLabel">Equipment Maintenance Monitoring</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="mb-3">
+                        <h4>Current equipment status</h4>
+                    </div>
+                    <div id="equipmentDiv">
+                        <table id="equipmentTable" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Model</th>
+                                <th>Room Id</th>
+                                <th>Room number</th>
+                                <th>Status</th>
+                                <th>Handle</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <form>
+                    <div class="mb-3">
+                        <h4>Update Equipment</h4>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Id</span>
+                            <input id="equipment_id" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Model</span>
+                            <input id="equipment_model" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Room id</span>
+                            <input id="equipment_room_id" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Status</span>
+                            <input id="equipment_status" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="equipmentClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                </button>
+                <button id="equipmentUpdate" type="button" class="btn btn-success" onclick="equipmentUpdate()">Update
+                </button>
+                <button id="equipmentSave" type="button" class="btn btn-primary" onclick="equipmentAdd()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="class" tabindex="-1" aria-labelledby="classLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="classLabel">Class Schedule</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <div class="mb-3">
+                        <h4>Current class</h4>
+                    </div>
+                    <div id="classDiv">
+                        <table id="classTable" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Class id</th>
+                                <th>Class name</th>
+                                <th>Room number</th>
+                                <th>Date</th>
+                                <th>Start time</th>
+                                <th>End time</th>
+                                <th>Handle</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <form>
+                    <div class="mb-3">
+                        <h4>Update Class</h4>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Class id</span>
+                            <input id="class_id" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Class name</span>
+                            <input id="class_name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Room id</span>
+                            <input id="class_room_id" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Date</span>
+                            <input id="class_date" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Start time</span>
+                            <input id="calss_starttime" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">End time</span>
+                            <input id="class_endtime" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="classClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="classUpdate" type="button" class="btn btn-success" onclick="classUpdate()">Update</button>
+                <button id="classSave" type="button" class="btn btn-primary" onclick="classAdd()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="bill" tabindex="-1" aria-labelledby="billLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="billLabel">Billing and
+                    Payment Processing</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-top: 10px; margin-bottom: 10px">
+                    <p>For safety reasons, we don't allow anyone to delete or update the bill. Administrative Staff can only check the bill and add new ones.</p>
+                    <div class="mb-3">
+                        <h4>Current Bill</h4>
+                    </div>
+                    <div id="billDiv">
+                        <table id="billTable" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Member email</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Project name</th>
+                                <th>Card number</th>
+                                <th>Subtotal</th>
+                                <th>HST</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <form>
+                    <div class="mb-3">
+                        <h4>Add Bill</h4>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Member email</span>
+                            <input id="bill_email" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Date</span>
+                            <input id="bill_date" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Time</span>
+                            <input id="bill_time" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Project name</span>
+                            <input id="bill_name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Card number</span>
+                            <input id="bill_card" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">Subtotal</span>
+                            <input id="bill_subtotal" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">HST</span>
+                            <input id="bill_hst" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="billClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="billSave" type="button" class="btn btn-primary" onclick="billAdd()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function removeRoomButton(id) {
+        let room = {
+            id: id
+        }
+
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Deleted!")
+                $('#roomTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/adm/room/delete");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(room));
+    }
+
+    function roomAdd() {
+        let room_number = document.getElementById("room_number").value;
+        let room_date = document.getElementById("room_date").value;
+        let room_starttime = document.getElementById("room_starttime").value;
+        let room_endtime = document.getElementById("room_endtime").value;
+
+        let room = {
+            room_number: room_number,
+            date: room_date,
+            start_time: room_starttime,
+            end_time: room_endtime,
+        }
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("add success!");
+                $('#roomTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/adm/room/add");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(room));
+    }
+
+    function roomBooking() {
+        $('#room').modal('show');
+        fetch('/adm/room')
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+
+
+                    if ( ! $.fn.DataTable.isDataTable( '#roomTable' ) ) {
+                        let roomTable = $('#roomTable').DataTable({
+                            ajax: '/adm/room',
+                            columnDefs: [
+                                {
+                                    data: 'id',
+                                    targets: 0,
+                                },
+                                {
+                                    data: 'room_number',
+                                    targets: 1
+                                },
+                                {
+                                    data: 'date',
+                                    targets: 2
+                                },
+                                {
+                                    data: 'start_time',
+                                    targets: 3
+                                },
+                                {
+                                    data: 'end_time',
+                                    targets: 4
+                                },
+                                {
+                                    data: null,
+                                    defaultContent: '<button  class="btn btn-danger">Remove</button>',
+                                    targets: -1
+                                }
+                            ]
+                        });
+
+                        roomTable.on('click', 'button', function (e) {
+                            let firstCellValue = $(this).closest('tr').find('td:first').text();
+                            removeRoomButton(firstCellValue);
+                        });
+                    }
+
+
+                } else {
+                    let res = `<div style="display: flex; justify-content: center; align-items: center;">No any room occupancy right now!<div>`;
+                    document.getElementById("roomDiv").innerHTML += res;
+                }
+            });
+    }
+
+    function removeEquipment(id) {
+        let Equipment = {
+            id: id
+        }
+
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Deleted!")
+                $('#equipmentTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/adm/equipment/delete");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(Equipment));
+    }
+
+    function equipmentUpdate() {
+        let equipment_id = document.getElementById("equipment_id").value;
+        let equipment_model = document.getElementById("equipment_model").value;
+        let equipment_room_id = document.getElementById("equipment_room_id").value;
+        let equipment_status = document.getElementById("equipment_status").value;
+
+        let equipment = {
+            id: equipment_id,
+            model: equipment_model,
+            room_id: equipment_room_id,
+            status: equipment_status,
+        }
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("update success!");
+                $('#equipmentTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/adm/equipment/update");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(equipment));
+    }
+
+    function equipmentAdd() {
+        let equipment_id = document.getElementById("equipment_id").value;
+        let equipment_model = document.getElementById("equipment_model").value;
+        let equipment_room_id = document.getElementById("equipment_room_id").value;
+        let equipment_status = document.getElementById("equipment_status").value;
+
+        let equipment = {
+            id: equipment_id,
+            model: equipment_model,
+            room_id: equipment_room_id,
+            status: equipment_status,
+        }
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("add success!");
+                $('#equipmentTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/adm/equipment/add");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(equipment));
+    }
+
+    function equipmentMaintenance() {
+        $('#equipment').modal('show');
+
+        fetch('/adm/equipment')
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    if ( ! $.fn.DataTable.isDataTable( '#equipmentTable' ) ) {
+                        let equipmentTable = $('#equipmentTable').DataTable({
+                            ajax: '/adm/equipment',
+                            columnDefs: [
+                                {
+                                    data: 'id',
+                                    targets: 0,
+                                },
+                                {
+                                    data: 'model',
+                                    targets: 1
+                                },
+                                {
+                                    data: 'room_id',
+                                    targets: 2
+                                },
+                                {
+                                    data: 'room_number',
+                                    targets: 3
+                                },
+                                {
+                                    data: 'status',
+                                    targets: 4,
+                                    render: function (data, type) {
+
+                                        if (data == -1) {
+                                            return "Not available"
+                                        }
+                                        if (data == 0) {
+                                            return "Need repair"
+                                        }
+                                        if (data == 1) {
+                                            return "Normal"
+                                        }
+                                    }
+                                },
+                                {
+                                    data: null,
+                                    defaultContent: '<button  class="btn btn-danger">Remove</button>',
+                                    targets: -1
+                                }
+                            ]
+                        });
+
+                        equipmentTable.on('click', 'button', function (e) {
+                            let firstCellValue = $(this).closest('tr').find('td:first').text();
+                            removeEquipment(firstCellValue);
+                        });
+
+                    }
+
+                } else {
+                    let res = `<div style="display: flex; justify-content: center; align-items: center;">No any equipment right now!<div>`;
+                    document.getElementById("equipmentDiv").innerHTML += res;
+                }
+            });
+
+    }
+
+
+    function removeClass(id) {
+        let GroupClass = {
+            class_id: id
+        }
+
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Remove success!")
+                $('#classTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/adm/class/delete");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(GroupClass));
+    }
+
+
+    function classUpdate() {
+        let class_id = document.getElementById("class_id").value;
+        let class_name = document.getElementById("class_name").value;
+        let room_id = document.getElementById("class_room_id").value;
+        let date = document.getElementById("class_date").value;
+        let start_time = document.getElementById("calss_starttime").value;
+        let end_time = document.getElementById("class_endtime").value;
+
+        let GroupClass = {
+            class_id : class_id,
+            class_name : class_name,
+            room_id : room_id,
+            date : date,
+            start_time : start_time,
+            end_time :end_time
+        }
+
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Update success!")
+                $('#classTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/adm/class/update");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(GroupClass));
+    }
+
+    function classAdd() {
+        let class_id = document.getElementById("class_id").value;
+        let class_name = document.getElementById("class_name").value;
+        let room_id = document.getElementById("class_room_id").value;
+        let date = document.getElementById("class_date").value;
+        let start_time = document.getElementById("calss_starttime").value;
+        let end_time = document.getElementById("class_endtime").value;
+
+        let GroupClass = {
+            class_id : class_id,
+            class_name : class_name,
+            room_id : room_id,
+            date : date,
+            start_time : start_time,
+            end_time :end_time
+        }
+
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Add success!")
+                $('#classTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/adm/class/add");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(GroupClass));
+    }
+
+
+    function classScheduleUpdate() {
+        $('#class').modal('show');
+
+        fetch('/adm/class')
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+
+
+                    if ( ! $.fn.DataTable.isDataTable( '#classTable' ) ) {
+                        let classTable = $('#classTable').DataTable({
+                            ajax: '/adm/class',
+                            columnDefs: [
+                                {
+                                    data: 'class_id',
+                                    targets: 0,
+                                },
+                                {
+                                    data: 'class_name',
+                                    targets: 1
+                                },
+                                {
+                                    data: 'room_number',
+                                    targets: 2
+                                },
+                                {
+                                    data: 'date',
+                                    targets: 3
+                                },
+                                {
+                                    data: 'start_time',
+                                    targets: 4
+                                },
+                                {
+                                    data: 'end_time',
+                                    targets: 5
+                                },
+                                {
+                                    data: null,
+                                    defaultContent: '<button  class="btn btn-danger">Remove</button>',
+                                    targets: -1
+                                }
+                            ]
+                        });
+
+                        classTable.on('click', 'button', function (e) {
+                            let firstCellValue = $(this).closest('tr').find('td:first').text();
+                            removeClass(firstCellValue);
+                        });
+                    }
+
+
+
+                } else {
+                    let res = `<div style="display: flex; justify-content: center; align-items: center;">No any class right now!<div>`;
+                    document.getElementById("classDiv").innerHTML += res;
+                }
+            });
+    }
+
+
+    function bill(){
+        $('#bill').modal('show');
+
+        fetch('/adm/bill')
+            .then(response => response.json())
+            .then(data => {
+                if (data.data != undefined) {
+                    if ( ! $.fn.DataTable.isDataTable( '#billTable' ) ) {
+                        let billTable = $('#billTable').DataTable({
+                            ajax: '/adm/bill',
+                            columnDefs: [
+                                {
+                                    data: 'member_email',
+                                    targets: 0,
+                                },
+                                {
+                                    data: 'date',
+                                    targets: 1
+                                },
+                                {
+                                    data: 'time',
+                                    targets: 2
+                                },
+                                {
+                                    data: 'project_name',
+                                    targets: 3
+                                },
+                                {
+                                    data: 'card_number',
+                                    targets: 4
+                                },
+                                {
+                                    data: 'subtotal',
+                                    targets: 5
+                                },
+                                {
+                                    data: 'hst',
+                                    targets: 6,
+                                    render: function (data, type) {
+
+                                        return data * 100
+                                    }
+                                },
+                                {
+                                    data: 'total',
+                                    targets: 7,
+                                    render: function (data, type) {
+
+                                        return data.toFixed(2)
+                                    }
+                                },
+                            ]
+                        });
+                    }
+
+
+
+
+
+                } else {
+                    let res = `<div style="display: flex; justify-content: center; align-items: center;">No any bill right now!<div>`;
+                    document.getElementById("billDiv").innerHTML += res;
+                }
+            });
+    }
+
+    function billAdd() {
+        let bill_email = document.getElementById("bill_email").value;
+        let bill_date = document.getElementById("bill_date").value;
+        let bill_time = document.getElementById("bill_time").value;
+        let bill_name = document.getElementById("bill_name").value;
+        let bill_card = document.getElementById("bill_card").value;
+        let bill_subtotal = document.getElementById("bill_subtotal").value;
+        let bill_hst = document.getElementById("bill_hst").value;
+
+        let bill = {
+            member_email : bill_email,
+            date : bill_date,
+            time : bill_time,
+            project_name : bill_name,
+            card_number : bill_card,
+            subtotal :bill_subtotal,
+            hst:bill_hst
+        }
+
+        // request
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("Add success!")
+                $('#billTable').DataTable().ajax.reload();
+            }
+        };
+        xhttp.open("POST", "/adm/bill/add");
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(bill));
+    }
+
+</script>
+
+
+</body>
+</html>
